@@ -21,7 +21,17 @@ byellow(){
 yum -y install unzip wget curl
 systemctl stop firewalld
 systemctl disable firewalld
-touch /root/client.json
+
+green "======================="
+yellow "请输入绑定到本VPS的域名"
+green "======================="
+read your_domain
+real_addr=`ping ${your_domain} -c 1 | sed '1{s/[^(]*(//;s/).*//;q}'`
+local_addr=`curl ipv4.icanhazip.com`
+green "======================="
+yellow "请输入trojan的连接密码"
+green "======================="
+read vpn_password
 cat > /root/server.json <<-EOF
 {
     "run_type": "server",
@@ -30,7 +40,7 @@ cat > /root/server.json <<-EOF
     "remote_addr": "www.yahoo.co.jp",
     "remote_port": 80,
     "password": [
-        "joshua.gu7"
+        "$vpn_password"
     ],
     "ssl": {
         "cert": "/root/server.crt",
@@ -38,13 +48,6 @@ cat > /root/server.json <<-EOF
     }
 }
 EOF
-
-green "======================="
-yellow "请输入绑定到本VPS的域名"
-green "======================="
-read your_domain
-real_addr=`ping ${your_domain} -c 1 | sed '1{s/[^(]*(//;s/).*//;q}'`
-local_addr=`curl ipv4.icanhazip.com`
 cat > /root/text.txt << EOF
 y
 $your_domain
