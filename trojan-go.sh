@@ -27,7 +27,7 @@ cat > /root/server.json <<-EOF
     "run_type": "server",
     "local_addr": "0.0.0.0",
     "local_port": 443,
-    "remote_addr": "127.0.0.1",
+    "remote_addr": "www.yahoo.co.jp",
     "remote_port": 80,
     "password": [
         "joshua.gu7"
@@ -94,4 +94,3 @@ cat > /root/client.json <<-EOF
 EOF
 fi
 nohup ./trojan-go -config server.json >trojan-go.log 2<&1 &
-
