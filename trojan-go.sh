@@ -55,7 +55,7 @@ if [ $real_addr == $local_addr ] ; then
 green "=========================================="
 green "域名解析正常，开启安装trojan-go并申请https证书"
 green "=========================================="
-wget -P /root https://github.com/p4gefau1t/trojan-go/releases/download/v0.4.6/trojan-go-linux-amd64.zip
+wget -P /root https://github.com/p4gefau1t/trojan-go/releases/download/v0.4.7/trojan-go-linux-amd64.zip
 cd /root/
 unzip trojan-go-linux-amd64.zip
 ./trojan-go -autocert request  < /root/text.txt
