@@ -18,7 +18,7 @@ byellow(){
     echo -e "\033[33m\033[01m\033[05m$1\033[0m"
 }
 
-yum -y install unzip wget curl firewalld
+yum -y install unzip wget curl firewalld epel*
 systemctl restart firewalld
 firewall-cmd --permanent --add-port=80/tcp
 firewall-cmd --permanent --add-port=443/tcp
