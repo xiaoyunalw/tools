@@ -60,7 +60,7 @@ password:
 ssl:
   cert: /root/trojan-go/server.cer
   key: /root/trojan-go/server.key
-  sni: $your_domain
+  fallback_port: 80
 router:
   enabled: true
   block:
@@ -125,7 +125,7 @@ if [ $real_addr == $local_addr ] ; then
         --fullchain-file /root/trojan-go/server.cer \
         --reloadcmd  "systemctl force-reload  nginx.service"
 	#systemctl stop nginx.service
-	yellow "nohup /root/trojan-go/./trojan-go -config /root/trojan-go/server.yaml >trojan-go.log 2<&1 &"
+	yellow "nohup /root/trojan-go/trojan-go -config /root/trojan-go/server.yaml >trojan-go.log 2<&1 &"
 else
 	red "================================"
 	red "域名解析地址与本VPS IP地址不一致"
