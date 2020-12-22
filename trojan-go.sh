@@ -61,12 +61,9 @@ ssl:
   cert: /root/trojan-go/server.cer
   key: /root/trojan-go/server.key
   fallback_port: 80
-router:
+mux:
   enabled: true
-  block:
-    - 'geoip:private'
-  geoip: /root/trojan-go/geoip.dat
-  geosite: /root/trojan-go/geosite.dat
+
 EOF
 
 # cat > /root/trojan-go/client.json <<-EOF
