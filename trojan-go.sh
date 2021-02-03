@@ -63,7 +63,8 @@ ssl:
   fallback_port: 80
 mux:
   enabled: true
-
+  concurrency: 10
+  idle_timeout: 60
 EOF
 
 # cat > /root/trojan-go/client.json <<-EOF
