@@ -63,7 +63,7 @@ ssl:
   fallback_port: 80
 mux:
   enabled: true
-  concurrency: 10
+  concurrency: -1
   idle_timeout: 60
 EOF
 
