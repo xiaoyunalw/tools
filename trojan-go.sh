@@ -61,10 +61,6 @@ ssl:
   cert: /root/trojan-go/server.cer
   key: /root/trojan-go/server.key
   fallback_port: 80
-mux:
-  enabled: true
-  concurrency: -1
-  idle_timeout: 60
 EOF
 
 # cat > /root/trojan-go/client.json <<-EOF
