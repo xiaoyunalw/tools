@@ -112,9 +112,9 @@ if [ $real_addr == $local_addr ] ; then
 	wget www.yahoo.co.jp
 	systemctl restart nginx.service
 	#申请https证书
-	curl https://get.acme.sh | sh
+	curl https://get.acme.sh | sh -s mail=123@qq.com
 	~/.acme.sh/acme.sh  --issue  -d $your_domain  --webroot /usr/share/nginx/html/
-    	~/.acme.sh/acme.sh  --installcert  -d  $your_domain   \
+    	~/.acme.sh/acme.sh  --install-cert  -d  $your_domain   \
         --key-file   /root/trojan-go/server.key \
         --fullchain-file /root/trojan-go/server.cer \
         --reloadcmd  "systemctl force-reload  nginx.service"
