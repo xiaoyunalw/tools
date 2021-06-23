@@ -112,7 +112,7 @@ if [ $real_addr == $local_addr ] ; then
 	wget www.yahoo.co.jp
 	systemctl restart nginx.service
 	#申请https证书
-	curl https://get.acme.sh | sh -s mail=123@qq.com
+	curl https://get.acme.sh | sh -s email=123@qq.com
 	~/.acme.sh/acme.sh  --issue  -d $your_domain  --webroot /usr/share/nginx/html/
     	~/.acme.sh/acme.sh  --install-cert  -d  $your_domain   \
         --key-file   /root/trojan-go/server.key \
