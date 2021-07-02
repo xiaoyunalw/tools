@@ -136,25 +136,28 @@ if [ $real_addr == $local_addr ] ; then
 	#systemctl stop nginx.service
 	#yellow "nohup /root/trojan-go/trojan-go -config /root/trojan-go/server.yaml >trojan-go.log 2<&1 &"
 	yellow "证书申请成功"
+	systemctl enable trojan-go
+	if [ $? == 0 ]
+	then
+	yellow "trojan-go服务已加入自启"
+	else
+	red "trojan-go服务加入自启失败"
+	fi
+
+	systemctl start trojan-go
+	if [ $? == 0 ]
+	then
+	yellow "trojan-go服务已开启"
+	else
+	red "trojan-go服务启动失败"
+	fi
+	
 else
 	red "================================"
 	red "域名解析地址与本VPS IP地址不一致"
 	red "本次安装失败，请确保域名解析正常"
 	red "================================"
+	red "解析的IP为："$local_addr
 fi
 
-systemctl enable trojan-go
-if [ $? == 0 ]
-then
-yellow "trojan-go服务已加入自启"
-else
-red "trojan-go服务加入自启失败"
-fi
 
-systemctl start trojan-go
-if [ $? == 0 ]
-then
-yellow "trojan-go服务已开启"
-else
-red "trojan-go服务启动失败"
-fi
