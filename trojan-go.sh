@@ -101,6 +101,20 @@ EOF
 # EOF
 
 
+cat > /usr/lib/systemd/system/trojan-go.service <<-EOF
+[Unit]
+Description=trojan-go
+After=nginx.service
+
+[Service]
+Type=simple
+ExecStart=/root/trojan-go/trojan-go -config /root/trojan-go/server.yaml 2>&1 >/dev/null
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+
 if [ $real_addr == $local_addr ] ; then
 	green "=========================================="
 	green "域名解析正常，开启安装nginx并申请https证书"
@@ -110,16 +124,18 @@ if [ $real_addr == $local_addr ] ; then
 	rm -rf /usr/share/nginx/html/*
 	cd /usr/share/nginx/html/
 	wget www.yahoo.co.jp
+	systemctl enable nginx.service
 	systemctl restart nginx.service
 	#申请https证书
-	curl https://get.acme.sh | sh -s email=123@qq.com
+	curl https://get.acme.sh | sh -s email 123@qq.com
 	~/.acme.sh/acme.sh  --issue  -d $your_domain  --webroot /usr/share/nginx/html/
     	~/.acme.sh/acme.sh  --install-cert  -d  $your_domain   \
         --key-file   /root/trojan-go/server.key \
         --fullchain-file /root/trojan-go/server.cer \
         --reloadcmd  "systemctl force-reload  nginx.service"
 	#systemctl stop nginx.service
-	yellow "nohup /root/trojan-go/trojan-go -config /root/trojan-go/server.yaml >trojan-go.log 2<&1 &"
+	#yellow "nohup /root/trojan-go/trojan-go -config /root/trojan-go/server.yaml >trojan-go.log 2<&1 &"
+	yellow "证书申请成功"
 else
 	red "================================"
 	red "域名解析地址与本VPS IP地址不一致"
@@ -127,3 +143,18 @@ else
 	red "================================"
 fi
 
+systemctl enable trojan-go
+if [ $? == 0 ]
+then
+yellow "trojan-go服务已加入自启"
+else
+red "trojan-go服务加入自启失败"
+fi
+
+systemctl start trojan-go
+if [ $? == 0 ]
+then
+yellow "trojan-go服务已开启"
+else
+red "trojan-go服务启动失败"
+fi
